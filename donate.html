@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Donate — E‑Fikishe</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">E‑Fikishe</a>
+        <nav class="nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="donate.html" class="nav-link active">Donate</a>
+          <a href="#" class="nav-link open-waitlist" id="loginLinkTop2">Login</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section container">
+        <h1 class="section-title">Support the mission</h1>
+        <p class="lead">Your donations help scale rider training, provide electric bike access, and keep prices low for small businesses.</p>
+
+        <form id="donationForm" class="card contact-card" aria-label="Donation form">
+          <label class="field"><span>Full name</span><input id="donorName" type="text" required></label>
+          <label class="field"><span>Email</span><input id="donorEmail" type="email" required></label>
+          <label class="field"><span>Amount (USD)</span><input id="donationAmount" type="number" min="1" step="1" required></label>
+          <div class="form-actions"><button class="btn btn-primary" type="submit">Donate (demo)</button></div>
+        </form>
+        <div style="margin-top:12px">
+          <button class="btn btn-ghost open-donate-contact" type="button">Supporter contact</button>
+        </div>
+        <div style="margin-top:18px">
+          <h4 style="margin-bottom:8px">Read our full proposal</h4>
+          <p class="muted">Download or view the full business proposal for investors, partners and supporters.</p>
+          <div style="margin-top:8px;display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn btn-ghost" href="investor.html">View proposal</a>
+            <a class="btn btn-ghost" href="proposal.md" download>Download proposal (MD)</a>
+            <a class="btn btn-ghost" href="#" id="downloadPdfHint">Download PDF (print)</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">© <span id="year"></span> E‑Fikishe</div>
+    </footer>
+
+    <div id="waitlistOverlay" class="waitlist-overlay" style="display:none;">
+      <div class="waitlist-panel" role="dialog" aria-modal="true">
+        <h2>Join the waitlist</h2>
+        <p class="muted">We’re currently in private preview — join the waitlist for access.</p>
+        <form id="waitlistForm" class="waitlist-form">
+          <label><span class="muted">Full name</span><input id="w-name" name="name" type="text" required></label>
+          <label><span class="muted">Email</span><input id="w-email" name="email" type="email" required></label>
+          <label><span class="muted">Interest</span>
+            <select id="w-interest" name="interest">
+              <option value="book">Book deliveries</option>
+              <option value="partner">Partner / Rider</option>
+              <option value="invest">Invest / Donate</option>
+            </select>
+          </label>
+          <div class="form-actions"><button class="btn btn-primary" type="submit">Join waitlist</button></div>
+        </form>
+        <div style="margin-top:12px;text-align:right"><button id="waitlistClose" class="btn btn-ghost">Close</button></div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Invest or Donate — E-Fikishe</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ================= WAITLIST / LOCK OVERLAY ================= -->
+<div id="waitlistOverlay" class="waitlist-overlay">
+  <div class="waitlist-panel" role="dialog" aria-modal="true">
+    <h2>E-Fikishe Platform</h2>
+    <p class="muted">
+      Investment and funding access is currently private.
+      Join the waitlist or unlock with a launch code.
+    </p>
+
+    <form class="waitlist-form">
+      <input type="text" placeholder="Full name" required>
+      <input type="email" placeholder="Email address" required>
+      <select>
+        <option>Invest in E-Fikishe</option>
+        <option>Donate / Support impact</option>
+      </select>
+      <button class="btn btn-primary" type="submit">Join waitlist</button>
+    </form>
+
+    <div class="divider">Admin access</div>
+
+    <div class="admin-unlock">
+      <input id="launchCode" type="password" placeholder="Launch code">
+      <button id="launchBtn" class="btn btn-outline">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">E-Fikishe</a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="book.html">Booking</a>
+      <a href="services.html">Services</a>
+      <a href="donate.html" class="active">Invest</a>
+      <a href="partners.html">Partners</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= PARALLAX HERO ================= -->
+<section class="parallax parallax-invest">
+  <div class="parallax-content container">
+    <h1>Back the future of electric delivery</h1>
+    <p>
+      Invest in a scalable, climate-positive logistics platform.
+      <span class="muted">Private round · Impact-driven</span>
+    </p>
+  </div>
+</section>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main class="container">
+
+  <!-- ===== INVESTMENT OVERVIEW ===== -->
+  <section class="panel">
+    <div class="panel-header">
+      <h2>Why E-Fikishe</h2>
+      <span class="tag">Investor preview</span>
+    </div>
+
+    <div class="info-grid">
+      <div>
+        <h3>Massive demand</h3>
+        <p>Nairobi’s last-mile delivery market is growing rapidly with rising e-commerce and urban congestion.</p>
+      </div>
+      <div>
+        <h3>Electric advantage</h3>
+        <p>Lower operating costs, zero fuel dependency, and reduced emissions.</p>
+      </div>
+      <div>
+        <h3>Platform model</h3>
+        <p>A marketplace connecting riders, SMEs, NGOs, and consumers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INVEST VS DONATE ===== -->
+  <section class="panel split">
+    <div class="card">
+      <h3>Invest</h3>
+      <p class="muted">
+        For angel investors, funds, and partners interested in long-term growth.
+      </p>
+      <ul class="list">
+        <li>Equity or convertible structures</li>
+        <li>Scalable unit economics</li>
+        <li>Expansion roadmap</li>
+      </ul>
+      <button class="btn btn-primary">Request investor brief</button>
+    </div>
+
+    <div class="card">
+      <h3>Donate / Support</h3>
+      <p class="muted">
+        For organisations and individuals supporting clean mobility and youth employment.
+      </p>
+      <ul class="list">
+        <li>Rider training & onboarding</li>
+        <li>Electric bike access</li>
+        <li>Community impact programs</li>
+      </ul>
+      <button class="btn btn-outline">Support the mission</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= PARALLAX IMPACT ================= -->
+<section class="parallax parallax-impact">
+  <div class="parallax-content container">
+    <div class="info-grid">
+      <div>
+        <h3>Climate impact</h3>
+        <p>Reduced emissions per delivery compared to petrol bikes.</p>
+      </div>
+      <div>
+        <h3>Youth employment</h3>
+        <p>Creating dignified jobs through electric mobility.</p>
+      </div>
+      <div>
+        <h3>Urban efficiency</h3>
+        <p>Faster, quieter, and cleaner deliveries.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© <span id="year"></span> E-Fikishe · Electric delivery platform</p>
+    <p class="muted">Private investment preview · Kenya</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("launchBtn").onclick = () => {
+    if (document.getElementById("launchCode").value === "efikishe2025") {
+      document.getElementById("waitlistOverlay").style.display = "none";
+    } else {
+      alert("Invalid launch code");
+    }
+  };
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

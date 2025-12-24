@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Gallery — E-Fikishe</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">E‑Fikishe</a>
+        <nav class="nav">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="donate.html">Donate</a>
+          <button class="btn btn-ghost open-waitlist" id="openWaitlist">Join waitlist</button>
+        </nav>
+        <button class="nav-toggle" id="navToggle">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="container">
+          <h1>Gallery</h1>
+          <p class="lead">A neutral selection of imagery related to development and electric mobility.</p>
+
+          <div class="gallery-grid">
+            <figure class="card gallery-item" data-reveal>
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=60" alt="Code on laptop — in development" loading="lazy" />
+            </figure>
+            <figure class="card gallery-item" data-reveal>
+              <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=60" alt="Motorbike for ride-hailing in urban setting" loading="lazy" />
+            </figure>
+            <figure class="card gallery-item" data-reveal>
+              <img src="https://images.unsplash.com/photo-1542223616-2a7c1cf8f0a8?auto=format&fit=crop&w=1200&q=60" alt="Electric delivery bike" loading="lazy" />
+            </figure>
+            <figure class="card gallery-item" data-reveal>
+              <img src="https://images.unsplash.com/photo-1519241047957-be31d7379a5d?auto=format&fit=crop&w=1200&q=60" alt="Charging hub / logistics" loading="lazy" />
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">E‑Fikishe</div>
+        <div class="footer-links"><a href="index.html">Home</a><a href="donate.html">Donate</a></div>
+        <div class="footer-small">© <span id="year"></span> E‑Fikishe</div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Investor Dashboard — E-Fikishe (Demo)</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <!-- Waitlist overlay: site locked until launch. -->
+    <div id="waitlistOverlay" class="waitlist-overlay" style="display:none;">
+      <div class="waitlist-panel" role="dialog" aria-modal="true" aria-labelledby="waitlistTitle">
+        <h2 id="waitlistTitle">E‑Fikishe — Early access</h2>
+        <p>We're launching soon. Join the waitlist to receive early access and priority booking when we go live.</p>
+        <form id="waitlistForm" class="waitlist-form" novalidate>
+          <input id="w-name" name="name" type="text" placeholder="Full name" required>
+          <input id="w-email" name="email" type="email" placeholder="you@example.org" required>
+          <input id="w-phone" name="phone" type="tel" placeholder="Phone (optional)">
+          <select id="w-interest" name="interest">
+            <option value="book">Book deliveries</option>
+            <option value="invest">Invest / Donate</option>
+          </select>
+          <div class="waitlist-actions">
+            <button class="btn btn-primary" type="submit">Join waitlist</button>
+            <div id="waitlistNote" class="waitlist-note"></div>
+          </div>
+        </form>
+        <div class="waitlist-admin">
+          <input id="launchCode" type="password" placeholder="Launch code (admin)" aria-label="Launch code">
+          <button id="launchBtn" class="btn btn-outline" type="button">Unlock</button>
+        </div>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">E‑Fikishe</a>
+        <nav class="nav">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="donate.html">Donate</a>
+          <button class="btn btn-ghost open-waitlist" id="openWaitlist">Join waitlist</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="container">
+          <h1>Business Proposal — E‑Fikishe</h1>
+          <p class="muted">Revolutionizing Last-Mile E-Mobility in Kenya</p>
+
+          <h2>1. Executive Summary</h2>
+          <p><strong>Company Name:</strong> E‑Fikishe</p>
+          <p><strong>Location:</strong> Kenya (starting in Nairobi)</p>
+          <p><strong>Industry:</strong> E-mobility, Last-mile delivery, Renewable energy, Solar charging, Carbon removal, Job creation.</p>
+          <p><strong>Mission:</strong> Provide convenient, affordable and eco-friendly last‑mile delivery using e-bikes and e-tuktuks while ensuring sustainability.</p>
+
+          <h2>2. Problem Statement</h2>
+          <p>E‑Fikishe addresses high fuel & maintenance costs, inefficient delivery performance in congested cities, high carbon emissions, and lack of charging infrastructure.</p>
+
+          <h2>3. Solution</h2>
+          <p>We will deliver a combined hardware + software solution:</p>
+          <ul>
+            <li><strong>E-bikes & E-tuktuks:</strong> efficient, low‑cost electric vehicles for deliveries.</li>
+            <li><strong>AI-Powered App:</strong> geomapping, dynamic pricing, route optimization and real-time tracking.</li>
+            <li><strong>Solar Charging Stations:</strong> strategically-located microgrids and pay-per-use chargers.</li>
+            <li><strong>EV Installation Services:</strong> personalized solar EV charging installs for clients.</li>
+            <li><strong>Cold-chain capability:</strong> refrigerated delivery options for perishables.</li>
+          </ul>
+
+          <h2>4. Market Analysis</h2>
+          <p><strong>Targets:</strong> B2B (shops, restaurants, e-commerce), B2C customers, and e-riders (drivers).</p>
+          <p><strong>Opportunity:</strong> Rapid e-commerce growth, urban congestion, and sustainability focus create a strong market for electric last-mile solutions in Kenya.</p>
+
+          <h2>5. Business Model</h2>
+          <p>Revenue streams include delivery fees, leasing, charging services, EV installation and carbon credit monetization.</p>
+
+          <h2>6. Operations</h2>
+          <p>Key activities: procure vehicles, deploy solar chargers, develop the app, train riders, and form partnerships with manufacturers and solar providers.</p>
+
+          <h2>7. Technology & Innovation</h2>
+          <p>AI-powered routing, rider management, dynamic pricing, and solar-charging microgrids underpin the platform.</p>
+
+          <h2>8. Marketing</h2>
+          <p>Branding, social campaigns, partnership promotions, and community outreach will drive adoption.</p>
+
+          <h2>9. Financials</h2>
+          <p>Initial costs: vehicle procurement, charging infrastructure, tech development and marketing. Funding: investors, grants, and partnerships.</p>
+
+          <h2>10. Scalability</h2>
+          <p>Expand to more cities, add services (battery swap, EV sales), and explore franchising for chargers.</p>
+
+          <h2>11. Impact</h2>
+          <p>Lower emissions, job creation, cost savings for businesses, and improved urban air quality.</p>
+
+          <h2>12. Next Steps</h2>
+          <ol>
+            <li>Run a Nairobi pilot to validate demand and pricing.</li>
+            <li>Secure funding and strategic partners.</li>
+            <li>Deploy chargers, launch the app, and scale rider onboarding.</li>
+          </ol>
+
+          <p style="margin-top:12px">Download the full proposal from the Donate page or view the proposal file in the repository.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">E‑Fikishe</div>
+        <div class="footer-small">© <span id="year"></span> E‑Fikishe</div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

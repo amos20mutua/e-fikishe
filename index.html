@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>E‑Fikishe — Modern Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#">E‑Fikishe</a>
+        <nav class="nav" id="mainNav">
+         
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="donate.html" class="nav-link">Donate</a>
+        </nav>
+        <div class="header-actions">
+          <a href="#" class="btn btn-ghost nav-login open-waitlist" id="loginLink">Log In</a>
+          <a href="#" class="btn btn-primary join-waitlist open-waitlist">Join The Waitlist</a>
+        </div>
+        <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="parallax hero eden-hero" data-parallax-speed="0.14">
+        <div class="parallax-content container hero-center">
+          <div class="hero-main">
+            <h1 class="hero-title big">Electric delivery that remembers the city</h1>
+            <p class="hero-lead">Scale low-cost, zero-emission parcel delivery with a service designed for cities and the people who keep them moving.</p>
+            <p class="hero-cta">
+              <a class="btn hero-cta-btn" href="#features">Join The Waitlist</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- decorative floating cards like Eden -->
+        <div class="floating-cards">
+          <figure class="card-float left" aria-hidden="true">
+            <img src="https://images.pexels.com/photos/35239831/pexels-photo-35239831.jpeg" alt="electric bike">
+          </figure>
+          <figure class="card-float right" aria-hidden="true">
+            <img src="https://images.pexels.com/photos/15685267/pexels-photo-15685267.jpeg" alt="cargo bike delivery">
+          </figure>
+        </div>
+      </section>
+
+      <!-- Development media: busy small looping video tiles (parallax zoom) -->
+      <section id="dev-media" class="parallax dev-media" data-parallax-speed="0.02">
+        <div class="parallax-content container" style="position:relative;min-height:360px;">
+          <figure class="dev-tile" data-parallax-speed="0.26" data-parallax-zoom="0.14" style="left:4%;top:6%;width:360px;height:220px">
+            <video src="https://media.istockphoto.com/id/1733905650/video/portrait-of-an-african-couple-on-electric-motorcycle.mp4?s=mp4-640x640-is&k=20&c=PkiVMZe4aCoR8UVyWK_oDgvykgPjAbZ57ELEWNe8CJ4=" autoplay muted loop playsinline></video>
+          </figure>
+          <figure class="dev-tile" data-parallax-speed="0.18" data-parallax-zoom="0.16" style="left:28%;top:6%;width:320px;height:220px">
+            <video src="https://media.istockphoto.com/id/462426320/video/holloway-head-island-birmingham-england.mp4?s=mp4-640x640-is&k=20&c=iqQ_v6ca4PLWJ1-MpFUhbjI8V5m_v7HB7-bERHFcbW8=" autoplay muted loop playsinline></video>
+          </figure>
+          <figure class="dev-tile" data-parallax-speed="0.20" data-parallax-zoom="0.12" style="left:50%;top:14%;width:360px;height:240px">
+            <video src="https://media.istockphoto.com/id/1408440478/video/young-woman-using-phone-on-motorbike-taxi.mp4?s=mp4-640x640-is&k=20&c=6xeLhvDSxiU9HO9m-NJ2FpxixnVa5oOyI0bwl3nSFlE=" autoplay muted loop playsinline></video>
+          </figure>
+          <figure class="dev-tile" data-parallax-speed="0.24" data-parallax-zoom="0.14" style="left:72%;top:6%;width:280px;height:180px">
+            <video src="https://media.istockphoto.com/id/2168009196/video/courier-with-green-backpack-deliver-food-home-delivery-service-man-ride-moped.mp4?s=mp4-640x640-is&k=20&c=xCoY00wzDJQvW7EbwVlkD8zI_U63h4QGz9dfSMlhGsw=" autoplay muted loop playsinline></video>
+          </figure>
+          <figure class="dev-tile" data-parallax-speed="0.16" data-parallax-zoom="0.10" style="left:10%;top:44%;width:360px;height:240px">
+            <video src="https://media.istockphoto.com/id/2171203526/video/aerial-view-of-busy-city-traffic-with-cars-and-greenery-nairobi-kenya.mp4?s=mp4-640x640-is&k=20&c=dvwXqOl89ofSIR_KQapFRzZcL0B-IonPJmcknX0lcWA=" autoplay muted loop playsinline></video>
+          </figure>
+          <figure class="dev-tile" data-parallax-speed="0.20" data-parallax-zoom="0.10" style="left:44%;top:46%;width:340px;height:220px">
+            <video src="https://media.istockphoto.com/id/1661163256/video/modern-automated-logistics-warehouse-with-working-conveyor-belt-system-with-online-shopping.mp4?s=mp4-640x640-is&k=20&c=DXzatCpqaYtFfzUj8d7AnSWKLTAIQKt9xFuIs9yFYEE=" autoplay muted loop playsinline></video>
+          </figure>
+          <figure class="dev-tile" data-parallax-speed="0.14" data-parallax-zoom="0.08" style="left:68%;top:44%;width:360px;height:240px">
+            <video src="https://media.istockphoto.com/id/1436869987/video/mature-black-woman-at-home-receiving-some-packages.mp4?s=mp4-640x640-is&k=20&c=l0zMEZ2AySfGHyfkJiQp26wIdotp8JoIO-DKPqIgKpc=" autoplay muted loop playsinline></video>
+          </figure>
+          <figure class="dev-tile" data-parallax-speed="0.22" data-parallax-zoom="0.12" style="left:20%;top:72%;width:320px;height:200px">
+            <video src="https://media.istockphoto.com/id/1733905943/video/man-riding-electric-motorbike-through-nairobi-in-urban-traffic.mp4?s=mp4-480x480-is&k=20&c=lZtAfUDuxrERok5IaZzBB7nQVU30ZWc5O_qM7O9QWBA=" autoplay muted loop playsinline></video>
+          </figure>
+        </div>
+      </section>
+
+    <!-- Waitlist overlay (shared) -->
+    <div id="waitlistOverlay" class="waitlist-overlay" style="display:none;">
+      <div class="waitlist-panel" role="dialog" aria-modal="true">
+        <h2>Join the waitlist</h2>
+        <p class="muted">We’re currently in private preview — join the waitlist for access.</p>
+        <form id="waitlistForm" class="waitlist-form">
+          <label><span class="muted">Full name</span><input id="w-name" name="name" type="text" required></label>
+          <label><span class="muted">Email</span><input id="w-email" name="email" type="email" required></label>
+          <label><span class="muted">Interest</span>
+            <select id="w-interest" name="interest">
+              <option value="book">Book deliveries</option>
+              <option value="partner">Partner / Rider</option>
+              <option value="invest">Invest / Donate</option>
+            </select>
+          </label>
+          <div class="form-actions"><button class="btn btn-primary" type="submit">Join waitlist</button></div>
+        </form>
+        <div style="margin-top:12px;text-align:right"><button id="waitlistClose" class="btn btn-ghost">Close</button></div>
+      </div>
+    </div>
+
+      <section id="features" class="section container" data-parallax-speed="0.08">
+        <h2 class="section-title">Features</h2>
+        <div class="cards-grid">
+          <article class="card">
+            <h3>Performance-first</h3>
+            <p>Lightweight code, fast load times, and fluid animations that enhance, not distract.</p>
+          </article>
+          <article class="card">
+            <h3>Accessible by design</h3>
+            <p>Semantic markup, keyboard support, and readable contrast for everyone.</p>
+          </article>
+          <article class="card">
+            <h3>Parallax & motion</h3>
+            <p>Subtle, performant parallax that adds depth without battery drain.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="impact" class="parallax section" data-parallax-speed="0.06" style="background-image:linear-gradient(180deg, rgba(10,183,216,0.02), rgba(255,255,255,0));">
+        <div class="parallax-content container">
+          <h2 class="section-title">Impact</h2>
+          <p class="lead">Built to reduce friction and emissions — a simple product that can scale globally.</p>
+          <div class="stats-grid">
+            <div class="stat"><div class="stat-value">0</div><div class="stat-label">Emissions (demo)</div></div>
+            <div class="stat"><div class="stat-value">0</div><div class="stat-label">Cost per delivery (demo)</div></div>
+            <div class="stat"><div class="stat-value">0</div><div class="stat-label">Happy riders (demo)</div></div>
+          </div>
+
+          <div class="impact-media" style="margin-top:18px;">
+            <h3 style="margin-bottom:10px;color:var(--theme-text)">Development & Business — Visuals</h3>
+            <div class="impact-grid">
+              <figure class="impact-tile" data-parallax-speed="0.12" data-parallax-zoom="0.06">
+                <video class="impact-video" src="https://media.istockphoto.com/id/2230837856/video/two-dispatchers-tracking-cargo-routes-on-digital-maps.mp4?s=mp4-640x640-is&k=20&c=JwkNt0IF3rg52mgeTJ_B_oA40W8pYxLrokN5lDKI-Sw=" autoplay muted loop playsinline></video>
+                <figcaption class="muted">Business ops — planning & logistics</figcaption>
+              </figure>
+
+              <figure class="impact-tile" data-parallax-speed="0.28" data-parallax-zoom="0.32">
+                <video class="impact-video" src="https://media.istockphoto.com/id/2162666632/video/ai-software-generates-interactive-content-on-screen-showcasing-advanced-chat-capabilities-and.mp4?s=mp4-640x640-is&k=20&c=F1GjmvLVwwZ1cToTDkq3BJPYF0nvh2LXeXjWsMSp9-4=" autoplay muted loop playsinline></video>
+                <figcaption class="muted">App development  </figcaption>
+              </figure>
+
+              <figure class="impact-tile" data-parallax-speed="0.14" data-parallax-zoom="0.06">
+                <video class="impact-video" src="https://media.istockphoto.com/id/1936386113/video/drone-pilot-surveying-forest-climate-smart.mp4?s=mp4-640x640-is&k=20&c=a5hkQMd9xJty6yQB4Qw6NyBWjrqgGQsFl4bMaxnKp0I=" autoplay muted loop playsinline></video>
+                <figcaption class="muted">Rider onboarding & field testing</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section container">
+        <h2 class="section-title">Contact</h2>
+        <div class="card contact-card">
+          <p class="lead">Direct contact to the team is currently closed. For inquiries and supporter contact options, please use the Donate page.</p>
+          <div class="form-actions"><a class="btn btn-primary" href="donate.html">Go to Donate</a></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner footer-grid">
+        <div class="footer-brand-col">
+          <a class="brand footer-brand" href="index.html">E‑Fikishe</a>
+          <p class="muted" style="margin-top:8px;max-width:360px">Scaling clean, affordable last-mile delivery with electric bikes — pilot phase in Nairobi.</p>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Explore</h4>
+          <ul class="footer-list">
+            <li><a href="about.html">About</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="services.html">Services</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact-col">
+          <h4>Support</h4>
+          <p class="muted">Supporter contact and partnership intake via Donate page.</p>
+          <a class="btn btn-primary" href="donate.html" style="margin-top:8px;">Support the mission</a>
+        </div>
+
+        <div class="footer-meta-col">
+          <div class="muted">© <span id="year"></span> E‑Fikishe</div>
+          <div class="muted" style="margin-top:6px">Built for cleaner cities • Nairobi</div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <button class="join-fab open-waitlist" aria-label="Join waitlist">Join</button>
+  </body>
+</html>

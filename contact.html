@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contact — E-Fikishe</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ================= WAITLIST OVERLAY ================= -->
+<div id="waitlistOverlay" class="waitlist-overlay">
+  <div class="waitlist-panel" role="dialog" aria-modal="true">
+    <h2>E-Fikishe Platform</h2>
+    <p class="muted">
+      Messaging and partnerships are currently limited.
+      Join the waitlist or unlock with a launch code.
+    </p>
+
+    <form class="waitlist-form">
+      <input type="text" placeholder="Full name" required>
+      <input type="email" placeholder="Email address" required>
+      <select>
+        <option>General inquiry</option>
+        <option>Business logistics</option>
+        <option>Investment / partnership</option>
+        <option>Rider program</option>
+      </select>
+      <button class="btn btn-primary" type="submit">Join waitlist</button>
+    </form>
+
+    <div class="divider">Admin access</div>
+
+    <div class="admin-unlock">
+      <input id="launchCode" type="password" placeholder="Launch code">
+      <button id="launchBtn" class="btn btn-outline">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">E-Fikishe</a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="book.html">Booking</a>
+      <a href="services.html">Services</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= PARALLAX HERO ================= -->
+<section class="parallax parallax-contact">
+  <div class="parallax-content container">
+    <h1>Get in touch</h1>
+    <p>
+      For partnerships, logistics pilots, and platform inquiries.
+      <span class="muted">Nairobi · Kenya</span>
+    </p>
+  </div>
+</section>
+
+<!-- ================= MAIN ================= -->
+<main class="container">
+
+  <!-- ===== CONTACT GRID ===== -->
+  <section class="panel split">
+    <div>
+      <h2>Contact temporarily closed</h2>
+      <p class="muted">Direct contact channels are currently closed. If you are a supporter or partner and need to reach the team, please use the Donate page — supporter contact options and partnership intake are available there.</p>
+      <div class="form-actions" style="margin-top:12px"><a class="btn btn-primary" href="donate.html">Go to Donate</a></div>
+    </div>
+
+    <!-- ===== CONTACT FORM ===== -->
+    <div class="card">
+      <h3>Contact disabled</h3>
+      <p class="muted">The message form is disabled during the pilot. Supporter and partner contact options are available via the Donate page.</p>
+      <div class="form-actions"><a class="btn btn-primary" href="donate.html">Visit Donate</a></div>
+    </div>
+  </section>
+
+  <!-- ===== PLATFORM STATUS ===== -->
+  <section class="panel">
+    <div class="panel-header">
+      <h2>Platform status</h2>
+      <span class="tag">Public preview</span>
+    </div>
+
+    <ul class="status-list">
+      <li><strong>Bookings:</strong> Early access</li>
+      <li><strong>Rider network:</strong> Onboarding pilot</li>
+      <li><strong>Business accounts:</strong> Invite-only</li>
+      <li><strong>Public launch:</strong> Upcoming</li>
+    </ul>
+  </section>
+
+</main>
+
+<!-- ================= PARALLAX FOOTER CTA ================= -->
+<section class="parallax parallax-footer">
+  <div class="parallax-content container">
+    <h2>Building cleaner urban logistics</h2>
+    <p>
+      E-Fikishe is shaping the future of electric last-mile delivery in Kenya.
+    </p>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© <span id="year"></span> E-Fikishe · Electric logistics platform</p>
+    <p class="muted">Contact & partnerships · Pilot phase</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("launchBtn").onclick = () => {
+    if (document.getElementById("launchCode").value === "efikishe2025") {
+      document.getElementById("waitlistOverlay").style.display = "none";
+    } else {
+      alert("Invalid launch code");
+    }
+  };
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

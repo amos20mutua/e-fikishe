@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Investor Login — E-Fikishe</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <!-- Waitlist overlay: site locked until launch. -->
+    <div id="waitlistOverlay" class="waitlist-overlay" style="display:none;">
+      <div class="waitlist-panel" role="dialog" aria-modal="true" aria-labelledby="waitlistTitle">
+        <h2 id="waitlistTitle">E‑Fikishe — Early access</h2>
+        <p>We're launching soon. Join the waitlist to receive early access and priority booking when we go live.</p>
+        <form id="waitlistForm" class="waitlist-form" novalidate>
+          <input id="w-name" name="name" type="text" placeholder="Full name" required>
+          <input id="w-email" name="email" type="email" placeholder="you@example.org" required>
+          <input id="w-phone" name="phone" type="tel" placeholder="Phone (optional)">
+          <select id="w-interest" name="interest">
+            <option value="book">Book deliveries</option>
+            <option value="invest">Invest / Donate</option>
+          </select>
+          <div class="waitlist-actions">
+            <button class="btn btn-primary" type="submit">Join waitlist</button>
+            <div id="waitlistNote" class="waitlist-note"></div>
+          </div>
+        </form>
+        <div class="waitlist-admin">
+          <input id="launchCode" type="password" placeholder="Launch code (admin)" aria-label="Launch code">
+          <button id="launchBtn" class="btn btn-outline" type="button">Unlock</button>
+        </div>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html">E‑Fikishe</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="container" style="max-width:560px">
+          <h1>Investor access</h1>
+          <p class="lead">This area is restricted to authorised investors for demo purposes. Enter the demo passphrase provided to you by the team.</p>
+
+          <form id="loginForm" class="contact-form">
+            <input id="investorEmail" type="email" placeholder="Email" required>
+            <input id="investorPass" type="password" placeholder="Passphrase" required>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">Enter investor area</button>
+            </div>
+            <div id="loginNote" class="form-note"></div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">E‑Fikishe</div>
+        <div class="footer-small">© <span id="year"></span> E‑Fikishe</div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

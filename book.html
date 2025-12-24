@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Book a Delivery — E-Fikishe</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ================= WAITLIST / LOCK OVERLAY ================= -->
+<div id="waitlistOverlay" class="waitlist-overlay">
+  <div class="waitlist-panel" role="dialog" aria-modal="true">
+    <h2>E-Fikishe Platform</h2>
+    <p class="muted">
+      The booking system is in private pilot. Join the waitlist or unlock with a launch code.
+    </p>
+
+    <form class="waitlist-form">
+      <input type="text" placeholder="Full name" required>
+      <input type="email" placeholder="Email address" required>
+      <input type="tel" placeholder="Phone (optional)">
+      <select>
+        <option>Book deliveries</option>
+        <option>Partner / Rider</option>
+        <option>Invest / Donate</option>
+      </select>
+      <button class="btn btn-primary" type="submit">Join waitlist</button>
+    </form>
+
+    <div class="divider">Admin access</div>
+
+    <div class="admin-unlock">
+      <input id="launchCode" type="password" placeholder="Launch code">
+      <button id="launchBtn" class="btn btn-outline">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">E-Fikishe</a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="book.html" class="active">Booking</a>
+      <a href="services.html">Services</a>
+      <a href="donate.html">Invest</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= PARALLAX HERO ================= -->
+<section class="parallax parallax-booking">
+  <div class="parallax-content container">
+    <h1>Book an electric delivery</h1>
+    <p>
+      Same-day, affordable, zero-emission deliveries across Nairobi.
+      <span class="muted">Private pilot · Demo flow</span>
+    </p>
+  </div>
+</section>
+
+<!-- ================= BOOKING FORM ================= -->
+<main class="container">
+  <section class="panel">
+    <div class="panel-header">
+      <h2>Delivery request</h2>
+      <span class="tag">Demo</span>
+    </div>
+
+    <p class="muted">
+      This is a client-side demo for investors. No real dispatch or payment is processed.
+    </p>
+
+    <form id="bookingForm" class="form-grid" novalidate>
+      <input id="name" name="name" type="text" placeholder="Full name" required>
+      <input id="email" name="email" type="email" placeholder="Email address" required>
+      <input id="phone" name="phone" type="tel" placeholder="Phone number" required>
+
+      <input id="pickup" name="pickup" type="text" placeholder="Pickup location" required>
+      <input id="destination" name="destination" type="text" placeholder="Delivery destination" required>
+
+      <input id="date" name="date" type="date" required>
+      <input id="time" name="time" type="time" required>
+
+      <textarea id="package" name="package" rows="3" placeholder="Package details (size, weight, fragile)" required></textarea>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Request quote & book</button>
+        <a href="services.html" class="btn btn-ghost">View services</a>
+      </div>
+    </form>
+
+    <div id="bookingConfirmation" class="card" style="display:none;margin-top:20px;"></div>
+  </section>
+</main>
+
+<!-- ================= PARALLAX INFO ================= -->
+<section class="parallax parallax-info">
+  <div class="parallax-content container">
+    <div class="info-grid">
+      <div>
+        <h3>Electric riders</h3>
+        <p>Lower delivery costs and zero fuel emissions.</p>
+      </div>
+      <div>
+        <h3>Smart dispatch</h3>
+        <p>Optimised routes and rider matching.</p>
+      </div>
+      <div>
+        <h3>Local impact</h3>
+        <p>Youth jobs and cleaner cities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© <span id="year"></span> E-Fikishe · Electric delivery platform</p>
+    <p class="muted">Private preview · Kenya</p>
+  </div>
+</footer>
+
+<script>
+  // Launch unlock
+  document.getElementById("launchBtn").onclick = () => {
+    if (document.getElementById("launchCode").value === "efikishe2025") {
+      document.getElementById("waitlistOverlay").style.display = "none";
+    } else {
+      alert("Invalid launch code");
+    }
+  };
+
+  // Demo confirmation
+  document.getElementById("bookingForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const box = document.getElementById("bookingConfirmation");
+    box.style.display = "block";
+    box.innerHTML = `
+      <strong>Booking received (demo)</strong><br>
+      Our system has recorded your request. Dispatch & pricing will be enabled at launch.
+    `;
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

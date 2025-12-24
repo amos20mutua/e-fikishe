@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Services — E-Fikishe</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ================= WAITLIST OVERLAY ================= -->
+<div id="waitlistOverlay" class="waitlist-overlay">
+  <div class="waitlist-panel" role="dialog" aria-modal="true">
+    <h2>E-Fikishe Platform</h2>
+    <p class="muted">
+      Service access is currently limited. Join the waitlist to unlock bookings when we launch.
+    </p>
+
+    <form class="waitlist-form">
+      <input type="text" placeholder="Full name" required>
+      <input type="email" placeholder="Email address" required>
+      <select>
+        <option>Book deliveries</option>
+        <option>Business logistics</option>
+        <option>Rider network</option>
+      </select>
+      <button class="btn btn-primary" type="submit">Join waitlist</button>
+    </form>
+
+    <div class="divider">Admin access</div>
+
+    <div class="admin-unlock">
+      <input id="launchCode" type="password" placeholder="Launch code">
+      <button id="launchBtn" class="btn btn-outline">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">E-Fikishe</a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="book.html">Booking</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="donate.html">Donate</a>
+      <a href="donate.html">Donate</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= PARALLAX HERO ================= -->
+<section class="parallax parallax-services">
+  <div class="parallax-content container">
+    <h1>Electric delivery services</h1>
+    <p>
+      Built for speed, affordability, and scale.
+      <span class="muted">Urban Kenya · Pilot phase</span>
+    </p>
+  </div>
+</section>
+
+<!-- ================= MAIN ================= -->
+<main class="container">
+
+  <!-- ===== CORE SERVICES ===== -->
+  <section class="panel">
+    <div class="panel-header">
+      <h2>Core services</h2>
+      <span class="tag">Platform overview</span>
+    </div>
+
+    <div class="info-grid">
+      <div class="card">
+        <h3>On-demand deliveries</h3>
+        <p>
+          Same-day and scheduled deliveries using electric motorbikes.
+          Ideal for individuals, SMEs, and e-commerce sellers.
+        </p>
+        <ul class="list">
+          <li>Pickup & drop-off</li>
+          <li>Real-time rider matching (pilot)</li>
+          <li>Lower delivery costs</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Business logistics</h3>
+        <p>
+          Reliable last-mile delivery for shops, pharmacies, restaurants, and online sellers.
+        </p>
+        <ul class="list">
+          <li>Bulk and repeat deliveries</li>
+          <li>Monthly billing</li>
+          <li>Dedicated rider pools</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>NGO & impact deliveries</h3>
+        <p>
+          Affordable logistics for NGOs and community programs operating in urban and peri-urban areas.
+        </p>
+        <ul class="list">
+          <li>Subsidised routes</li>
+          <li>Impact reporting</li>
+          <li>Clean mobility alignment</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RIDER NETWORK ===== -->
+  <section class="panel split">
+    <div>
+      <h2>Rider network</h2>
+      <p class="muted">
+        E-Fikishe aggregates independent electric bike riders into a single dispatch platform.
+      </p>
+
+      <ul class="list">
+        <li>Flexible work opportunities</li>
+        <li>Lower operating costs than petrol bikes</li>
+        <li>Training & onboarding support</li>
+      </ul>
+
+      <a href="donate.html" class="btn btn-outline">Support rider programs</a>
+    </div>
+
+    <div class="card">
+      <h3>Platform status</h3>
+      <ul class="status-list">
+        <li><strong>Dispatch:</strong> Pilot testing</li>
+        <li><strong>Booking:</strong> Early access</li>
+        <li><strong>Payments:</strong> Planned integration</li>
+        <li><strong>Mobile app:</strong> Roadmap</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= PARALLAX CTA ================= -->
+<section class="parallax parallax-cta">
+  <div class="parallax-content container">
+    <h2>Built for a cleaner city</h2>
+    <p>
+      Electric bikes reduce emissions, noise, and delivery costs — without slowing down cities.
+    </p>
+    <a href="book.html" class="btn btn-primary">Request a delivery</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© <span id="year"></span> E-Fikishe · Electric logistics platform</p>
+    <p class="muted">Services preview · Nairobi, Kenya</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("launchBtn").onclick = () => {
+    if (document.getElementById("launchCode").value === "efikishe2025") {
+      document.getElementById("waitlistOverlay").style.display = "none";
+    } else {
+      alert("Invalid launch code");
+    }
+  };
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
