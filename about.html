@@ -51,7 +51,6 @@
       </section>
     </main>
 
-
     <div id="waitlistOverlay" class="waitlist-overlay" style="display:none;">
       <div class="waitlist-panel" role="dialog" aria-modal="true">
         <h2>Join the waitlist</h2>
@@ -66,184 +65,41 @@
               <option value="invest">Invest / Donate</option>
             </select>
           </label>
-          <div class="form-actions"><button class="btn btn-primary" type="submit">Join waitlist</button></div>
+          <div class="form-actions"><button class="btn btn-primary open-waitlist" type="submit">Join waitlist</button></div>
         </form>
         <div style="margin-top:12px;text-align:right"><button id="waitlistClose" class="btn btn-ghost">Close</button></div>
       </div>
     </div>
+
+    <footer class="site-footer">
+      <div class="container footer-inner footer-grid">
+        <div class="footer-brand-col">
+          <a class="brand footer-brand" href="index.html">E‑Fikishe</a>
+          <p class="muted" style="margin-top:8px;max-width:360px">Scaling clean, affordable last-mile delivery with electric bikes — pilot phase in Nairobi.</p>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Explore</h4>
+          <ul class="footer-list">
+            <li><a href="about.html">About</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="services.html">Services</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact-col">
+          <h4>Support</h4>
+          <p class="muted">Supporter contact and partnership intake via Donate page.</p>
+          <a class="btn btn-primary" href="donate.html" style="margin-top:8px;">Support the mission</a>
+        </div>
+
+        <div class="footer-meta-col">
+          <div class="muted">© <span id="year"></span> E‑Fikishe</div>
+          <div class="muted" style="margin-top:6px">Built for cleaner cities • Nairobi</div>
+        </div>
+      </div>
+    </footer>
+
     <script src="script.js"></script>
   </body>
-</html>
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>About — E-Fikishe</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-<!-- ================= WAITLIST / LOCK ================= -->
-<div id="waitlistOverlay" class="waitlist-overlay">
-  <div class="waitlist-panel" role="dialog" aria-modal="true">
-    <h2>E-Fikishe Platform</h2>
-    <p class="muted">
-      This platform is currently in private preview.
-      Join the waitlist to access bookings and partner features.
-    </p>
-
-    <form class="waitlist-form">
-      <input type="text" placeholder="Full name" required>
-      <input type="email" placeholder="Email address" required>
-      <select>
-        <option>General interest</option>
-        <option>Business logistics</option>
-        <option>Investment / partnership</option>
-      </select>
-      <button class="btn btn-primary" type="submit">Join waitlist</button>
-    </form>
-
-    <div class="divider">Admin access</div>
-
-    <div class="admin-unlock">
-      <input id="launchCode" type="password" placeholder="Launch code">
-      <button id="launchBtn" class="btn btn-outline">Unlock</button>
-    </div>
-  </div>
-</div>
-
-
-<!-- ================= MAIN ================= -->
-<main class="container">
-
-  <!-- ===== PROBLEM ===== -->
-  <section class="panel">
-    <div class="panel-header">
-      <h2>The problem</h2>
-      <span class="tag">Context</span>
-    </div>
-
-    <p>
-      Urban delivery in Nairobi is constrained by traffic congestion,
-      rising fuel costs, and unreliable last-mile logistics.
-      Businesses, NGOs, and individuals depend on motorbike deliveries,
-      yet the current ecosystem is fragmented and inefficient.
-    </p>
-
-    <p class="muted">
-      Petrol-powered bikes dominate the market, creating high operating costs
-      and environmental impact while limiting rider earnings.
-    </p>
-  </section>
-
-  <!-- ===== SOLUTION ===== -->
-  <section class="panel">
-    <div class="panel-header">
-      <h2>The E-Fikishe approach</h2>
-      <span class="tag">Solution</span>
-    </div>
-
-    <div class="info-grid">
-      <div>
-        <h3>Electric-first</h3>
-        <p>
-          We focus on electric motorbikes to reduce fuel dependency,
-          operating costs, and emissions.
-        </p>
-      </div>
-
-      <div>
-        <h3>Platform model</h3>
-        <p>
-          E-Fikishe aggregates independent riders into a single
-          dispatch and booking system.
-        </p>
-      </div>
-
-      <div>
-        <h3>Local scale</h3>
-        <p>
-          Designed specifically for Kenyan cities,
-          with expansion potential across East Africa.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== WHY NAIROBI ===== -->
-  <section class="panel">
-    <div class="panel-header">
-      <h2>Why Nairobi</h2>
-      <span class="tag">Market</span>
-    </div>
-
-    <p>
-      Nairobi has one of the highest motorbike delivery densities in the region.
-      Electric bikes are becoming more affordable and accessible,
-      creating a unique opportunity for clean, efficient logistics.
-    </p>
-
-    <ul class="list">
-      <li>Growing e-commerce and SME demand</li>
-      <li>Increasing adoption of electric bikes</li>
-      <li>Severe traffic congestion favoring two-wheel mobility</li>
-    </ul>
-  </section>
-
-  <!-- ===== STATUS ===== -->
-  <section class="panel">
-    <div class="panel-header">
-      <h2>Current status</h2>
-      <span class="tag">Pilot phase</span>
-    </div>
-
-    <ul class="status-list">
-      <li><strong>Platform:</strong> Private preview</li>
-      <li><strong>Bookings:</strong> Early access testing</li>
-      <li><strong>Rider network:</strong> Onboarding pilot</li>
-      <li><strong>Public launch:</strong> Planned</li>
-    </ul>
-  </section>
-
-  <!-- ===== TEAM NOTE ===== -->
-  <section class="panel">
-    <div class="panel-header">
-      <h2>Team & vision</h2>
-      <span class="tag">Founding</span>
-    </div>
-
-    <p>
-      E-Fikishe is built by a small, focused team of technologists
-      and operators with experience in urban mobility and digital platforms.
-    </p>
-
-    <p class="muted">
-      Our vision is to make electric last-mile delivery
-      affordable, reliable, and scalable across African cities.
-    </p>
-  </section>
-
-</main>
-
-<!-- ================= FOOTER ================= -->
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <p>© <span id="year"></span> E-Fikishe · Electric logistics platform</p>
-    <p class="muted">About · Private preview</p>
-  </div>
-</footer>
-
-<script>
-  document.getElementById("launchBtn").onclick = () => {
-    if (document.getElementById("launchCode").value === "efikishe2025") {
-      document.getElementById("waitlistOverlay").style.display = "none";
-    } else {
-      alert("Invalid launch code");
-    }
-  };
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-
-</body>
 </html>
