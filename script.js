@@ -1,160 +1,5 @@
-/* Minimal site script: nav toggle, parallax, basic form stub, year fill */
-document.addEventListener('DOMContentLoaded', () => {
-  // year
-  const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
-
-  // nav toggle
-  const nav = document.querySelector('.nav');
-  let toggle = document.getElementById('navToggle');
-  // If no toggle button present (some pages), create one for mobile
-  if (!toggle) {
-    const headerInner = document.querySelector('.header-inner');
-    if (headerInner) {
-      toggle = document.createElement('button');
-      toggle.id = 'navToggle';
-      toggle.className = 'nav-toggle';
-      toggle.setAttribute('aria-label','Toggle navigation');
-      toggle.innerHTML = '☰';
-      headerInner.appendChild(toggle);
-    }
-  }
-  if (toggle && nav){
-    toggle.addEventListener('click', ()=>{
-      console.log('[NAV] Hamburger clicked');
-      const header = document.querySelector('.site-header');
-      if (header) {
-        header.classList.toggle('nav-open');
-        console.log('[NAV] nav-open toggled:', header.classList.contains('nav-open'));
-      }
-    });
-  }
-
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click', e=>{
-      const href = a.getAttribute('href'); if (!href || href === '#') return;
-      const el = document.querySelector(href); if (!el) return;
-      e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'});
-    });
-  });
-
-  // Lightweight parallax for elements with .parallax
-  (function(){
-    const els = Array.from(document.querySelectorAll('.parallax'));
-    if (!els.length) return;
-    let ticking = false;
-    function update(){
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      els.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        const speed = parseFloat(el.getAttribute('data-parallax-speed')) || 0.08;
-        const center = rect.top + rect.height/2;
-        const screenCenter = vh/2;
-        const dist = (center - screenCenter) / vh; // -1..1
-        const ty = Math.round(-dist * 40 * speed);
-        const content = el.querySelector('.parallax-content') || el.firstElementChild;
-        if (content) content.style.transform = `translate3d(0, ${ty}px, 0)`;
-        // background
-        const bg = window.getComputedStyle(el).backgroundImage;
-        if (bg && bg !== 'none'){
-          const posY = Math.round(-dist * 30 * speed);
-          el.style.backgroundPosition = `50% ${50 + posY}%`;
-        }
-      });
-      ticking = false;
-    }
-    function onScroll(){ if (ticking) return; ticking = true; requestAnimationFrame(update); }
-    window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', onScroll);
-    setTimeout(onScroll,80);
-  })();
-
-  /* ------------------------------------------------------------------
-     Per-element parallax: moves any element with `data-parallax-speed`
-     This enables multi-layer parallax inside hero mockups (fast, medium, slow)
-  ------------------------------------------------------------------ */
-  (function initLayersParallax(){
-    const layers = Array.from(document.querySelectorAll('[data-parallax-speed]'));
-    if (!layers.length) return;
-    let ticking = false;
-    function update(){
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      layers.forEach(el => {
-        const speed = parseFloat(el.getAttribute('data-parallax-speed')) || 0.08;
-        const rect = el.getBoundingClientRect();
-        const elCenter = rect.top + rect.height/2;
-        const screenCenter = vh/2;
-        const dist = (elCenter - screenCenter) / vh;
-        const ty = Math.round(-dist * 60 * speed);
-        // support optional zooming on elements via data-parallax-zoom
-        const zoomAttr = parseFloat(el.getAttribute('data-parallax-zoom')) || 0;
-        let scale = 1;
-        if (zoomAttr) {
-          // Special case: impact tiles should scale more dramatically
-          if (el.classList && el.classList.contains('impact-tile')){
-            const mag = zoomAttr * 2.6;
-            scale = 1 + Math.cos(dist * Math.PI) * mag;
-            scale = Math.max(0.9, Math.min(2.2, scale));
-          } else {
-            // map dist (-1..1) to a smooth cosine curve for natural zooming
-            scale = 1 + Math.cos(dist * Math.PI) * zoomAttr;
-            // clamp to reasonable bounds
-            scale = Math.max(0.85, Math.min(1.35, scale));
-          }
-        }
-        // add a small horizontal drift so tiles move over each other nicely
-        const tx = Math.round(dist * 30 * speed);
-        el.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${scale})`;
-
-        // if this is a dev-tile, bias z-index by speed so some tiles overlay others
-        if (el.classList && el.classList.contains('dev-tile')){
-          const base = 280;
-          const z = base + Math.round(speed * 200) + Math.round((1 - Math.abs(dist)) * 40);
-          el.style.zIndex = z;
-          // gently vary opacity for depth
-          const depthOpacity = 0.85 + Math.min(0.15, speed * 0.6);
-          el.style.opacity = depthOpacity;
-        }
-
-        // impact tiles: make middle tile scale up and overlay others while scrolling
-        if (el.classList && el.classList.contains('impact-tile')){
-          const base = 320;
-          const z = base + Math.round(speed * 200) + Math.round((1 - Math.abs(dist)) * 60);
-          el.style.zIndex = z;
-          const depthOpacity = 0.78 + Math.min(0.18, speed * 0.6);
-          // when scaled large, make the tile translucent so the tiles behind are still visible
-          if (scale > 1.18) {
-            el.style.opacity = 0.6;
-          } else {
-            el.style.opacity = depthOpacity;
-          }
-        }
-      });
-      ticking = false;
-    }
-    function onScroll(){ if (ticking) return; ticking = true; requestAnimationFrame(update); }
-    window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', onScroll);
-    setTimeout(onScroll, 60);
-  })();
-
-  // contact form stub
-  const form = document.getElementById('contactForm');
-  if (form){
-    form.addEventListener('submit', e=>{
-      e.preventDefault();
-      const name = document.getElementById('c-name')?.value || '';
-      const email = document.getElementById('c-email')?.value || '';
-      const msg = document.getElementById('c-message')?.value || '';
-      if (!name || !email || !msg) { alert('Please complete all fields.'); return; }
-      const btn = form.querySelector('button[type="submit"]');
-      btn.textContent = 'Sending...'; btn.disabled = true;
-      setTimeout(()=>{ btn.textContent = 'Sent'; btn.disabled = false; alert('Message sent (demo).'); form.reset(); }, 700);
-    });
-  }
-});
 /*
-  script.js — interactions for the E-Fikishe single-page site
+  script.js — interactions for the E-Fikishe multi-page demo
   - Year fill
   - Mobile nav toggle
   - Smooth scroll for internal links
@@ -164,6 +9,27 @@ document.addEventListener('DOMContentLoaded', () => {
 */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 0) Small helper: send waitlist confirmation email via backend / email service
+  // Replace WAITLIST_EMAIL_ENDPOINT with your deployed endpoint URL.
+  const WAITLIST_EMAIL_ENDPOINT = ''; // e.g. 'https://your-backend.example.com/api/waitlist-email'
+
+  async function sendWaitlistEmail(entry) {
+    // If not configured, keep site functional but skip network call.
+    if (!WAITLIST_EMAIL_ENDPOINT) {
+      console.info('[WAITLIST] Email endpoint not configured. Skipping email send.', entry);
+      return;
+    }
+    try {
+      await fetch(WAITLIST_EMAIL_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+      });
+    } catch (err) {
+      console.warn('[WAITLIST] Failed to send confirmation email', err);
+    }
+  }
+
   // 1) Set year in footer
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -358,19 +224,34 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const wForm = document.getElementById('waitlistForm');
-  if (wForm) wForm.addEventListener('submit', (ev) => {
+  if (wForm) wForm.addEventListener('submit', async (ev) => {
     ev.preventDefault();
-    const name = document.getElementById('w-name')?.value.trim();
-    const email = document.getElementById('w-email')?.value.trim();
+    const nameField = document.getElementById('w-name');
+    const emailField = document.getElementById('w-email');
+    const name = nameField?.value.trim();
+    const email = emailField?.value.trim();
+    const interest = document.getElementById('w-interest')?.value || '';
     if (!name || !email) { alert('Please provide name and email.'); return; }
     const btn = wForm.querySelector('button[type="submit"]');
     if (btn) { btn.disabled = true; btn.textContent = 'Joining...'; }
-    setTimeout(() => {
-      alert('Thanks — you have been added to the waitlist (demo).');
-      const overlay = document.getElementById('waitlistOverlay'); if (overlay) overlay.style.display = 'none';
-      if (btn) { btn.disabled = false; btn.textContent = 'Join waitlist'; }
-      wForm.reset();
-    }, 900);
+
+    const entry = {
+      name,
+      email,
+      interest,
+      ts: new Date().toISOString(),
+      // Optional: used by backend to personalise the email
+      logoUrl: window.location.origin + '/logo-efikishe.svg',
+      siteUrl: window.location.origin,
+      source: 'waitlist-overlay'
+    };
+
+    await sendWaitlistEmail(entry);
+
+    alert('Thanks — you have been added to the waitlist.');
+    const overlay = document.getElementById('waitlistOverlay'); if (overlay) overlay.style.display = 'none';
+    if (btn) { btn.disabled = false; btn.textContent = 'Join waitlist'; }
+    wForm.reset();
   });
 
   // 4) Scroll reveal using IntersectionObserver
