@@ -12,7 +12,7 @@
   --radius: 14px;
   --container: 1100px;
   --spacing: 20px;
-  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--theme-green);color:var(--theme-text);font-family:var(--font-family);-webkit-font-smoothing:antialiased}
@@ -164,6 +164,8 @@ html,body{height:100%;background:var(--theme-green);color:var(--theme-text);font
 .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none}
 .btn-primary{background:linear-gradient(90deg,var(--orange),#ff7a3d);color:#081216}
 .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--gold)}
+/* outline button used on admin / secondary CTAs */
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.35);color:var(--theme-text)}
 
 /* Parallax utilities */
 .parallax{position:relative;overflow:hidden}
@@ -175,7 +177,7 @@ html,body{height:100%;background:var(--theme-green);color:var(--theme-text);font
   .hero-inner{grid-template-columns:1fr}
   .cards-grid{grid-template-columns:1fr}
   /* Mobile: sliding right panel nav */
-  .nav{display:flex;flex-direction:column;gap:18px;align-items:flex-start;position:fixed;top:16px;right:16px;bottom:16px;width:320px;max-width:82%;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.94));backdrop-filter:blur(8px);border-radius:14px;box-shadow:0 20px 60px rgba(2,6,10,0.45);transform:translateX(110%);opacity:0;pointer-events:none;transition:transform 320ms cubic-bezier(.2,.9,.3,1),opacity 240ms ease}
+  .nav{display:flex;flex-direction:column;gap:18px;align-items:flex-start;position:fixed;top:60px;right:16px;bottom:16px;width:320px;max-width:82%;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.94));backdrop-filter:blur(8px);border-radius:14px;box-shadow:0 20px 60px rgba(2,6,10,0.45);transform:translateX(110%);opacity:0;pointer-events:none;transition:transform 320ms cubic-bezier(.2,.9,.3,1),opacity 240ms ease;z-index:10040}
   .nav .nav-header{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:6px}
   .nav .nav-brand{color:var(--charcoal);font-weight:800;text-decoration:none}
   .nav-close{background:transparent;border:0;font-size:18px;padding:6px;border-radius:8px;cursor:pointer;color:var(--charcoal)}
@@ -235,6 +237,16 @@ html,body{height:100%;background:var(--theme-green);color:var(--theme-text);font
 
 /* Small helpers */
 .muted{color:rgba(255,255,255,0.7)}
+.muted-small{color:rgba(255,255,255,0.65);font-size:0.8rem}
+.field-error{color:#ffb4b4;font-size:0.8rem}
+body.lock-scroll{overflow:hidden}
+
+/* Gallery layout */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px}
+.gallery-item img{width:100%;display:block;border-radius:12px;object-fit:cover}
+
+/* Brand logo next to wordmark */
+.brand-logo{width:24px;height:24px;margin-right:8px;flex-shrink:0}
 :root {
   /* Colors & accents */
   --bg-light: linear-gradient(180deg,#f7fbfd,#ffffff);
