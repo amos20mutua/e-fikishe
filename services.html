@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Services — E-Fikishe</title>
+  <link rel="icon" type="image/svg+xml" href="logo-efikishe.svg">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -39,14 +40,17 @@
 <!-- ================= HEADER ================= -->
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="index.html">E-Fikishe</a>
+    <a class="brand" href="index.html">
+      <img src="logo-efikishe.svg" alt="" class="brand-logo">
+      <span>E-Fikishe</span>
+    </a>
     <nav class="nav">
       <a href="index.html">Overview</a>
       <a href="book.html">Booking</a>
       <a href="services.html" class="active">Services</a>
       <a href="donate.html">Donate</a>
-      <a href="donate.html">Donate</a>
     </nav>
+    <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
   </div>
 </header>
 
@@ -160,16 +164,7 @@
   </div>
 </footer>
 
-<script>
-  document.getElementById("launchBtn").onclick = () => {
-    if (document.getElementById("launchCode").value === "efikishe2025") {
-      document.getElementById("waitlistOverlay").style.display = "none";
-    } else {
-      alert("Invalid launch code");
-    }
-  };
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
