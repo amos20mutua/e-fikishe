@@ -1,32 +1,41 @@
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Book an electric delivery with E-Fikishe. Same-day, affordable, zero-emission deliveries across Nairobi." />
   <title>Book a Delivery — E-Fikishe</title>
+  <link rel="icon" type="image/svg+xml" href="logo-efikishe.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- ================= WAITLIST / LOCK OVERLAY ================= -->
-<div id="waitlistOverlay" class="waitlist-overlay">
+<div id="waitlistOverlay" class="waitlist-overlay" style="display:none;">
   <div class="waitlist-panel" role="dialog" aria-modal="true">
     <h2>E-Fikishe Platform</h2>
     <p class="muted">
       The booking system is in private pilot. Join the waitlist or unlock with a launch code.
     </p>
 
-    <form class="waitlist-form">
-      <input type="text" placeholder="Full name" required>
-      <input type="email" placeholder="Email address" required>
-      <input type="tel" placeholder="Phone (optional)">
-      <select>
-        <option>Book deliveries</option>
-        <option>Partner / Rider</option>
-        <option>Invest / Donate</option>
-      </select>
-      <button class="btn btn-primary" type="submit">Join waitlist</button>
+    <form id="waitlistForm" class="waitlist-form">
+      <label><span>Full name</span><input id="w-name" name="name" type="text" required></label>
+      <label><span>Email</span><input id="w-email" name="email" type="email" required></label>
+      <label><span>Phone (optional)</span><input id="w-phone" name="phone" type="tel"></label>
+      <label><span>Interest</span>
+        <select id="w-interest" name="interest">
+          <option value="book">Book deliveries</option>
+          <option value="partner">Partner / Rider</option>
+          <option value="invest">Invest / Donate</option>
+        </select>
+      </label>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Join waitlist</button></div>
     </form>
+    <div style="margin-top:12px;text-align:right"><button id="waitlistClose" class="btn btn-ghost">Close</button></div>
 
     <div class="divider">Admin access</div>
 
@@ -40,15 +49,23 @@
 <!-- ================= HEADER ================= -->
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="index.html">E-Fikishe</a>
+    <a class="brand" href="index.html">
+      <img src="logo-efikishe.svg" alt="" class="brand-logo">
+      <span>E-Fikishe</span>
+    </a>
     <nav class="nav">
-      <a href="index.html">Overview</a>
-      <a href="book.html" class="active">Booking</a>
-      <a href="services.html">Services</a>
-      <a href="donate.html">Invest</a>
-      <a href="partners.html">Partners</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="book.html" class="nav-link active">Book</a>
+      <a href="donate.html" class="nav-link">Donate</a>
+      <a href="contact.html" class="nav-link">Contact</a>
     </nav>
+    <div class="header-actions">
+      <a href="#" class="btn btn-ghost nav-login open-waitlist" id="loginLink">Log In</a>
+      <a href="#" class="btn btn-primary join-waitlist open-waitlist">Join The Waitlist</a>
+    </div>
+    <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
   </div>
 </header>
 
@@ -126,29 +143,7 @@
   </div>
 </footer>
 
-<script>
-  // Launch unlock
-  document.getElementById("launchBtn").onclick = () => {
-    if (document.getElementById("launchCode").value === "efikishe2025") {
-      document.getElementById("waitlistOverlay").style.display = "none";
-    } else {
-      alert("Invalid launch code");
-    }
-  };
-
-  // Demo confirmation
-  document.getElementById("bookingForm").addEventListener("submit", e => {
-    e.preventDefault();
-    const box = document.getElementById("bookingConfirmation");
-    box.style.display = "block";
-    box.innerHTML = `
-      <strong>Booking received (demo)</strong><br>
-      Our system has recorded your request. Dispatch & pricing will be enabled at launch.
-    `;
-  });
-
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
