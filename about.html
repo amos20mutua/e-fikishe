@@ -3,25 +3,38 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Learn about E-Fikishe's mission to transform urban delivery in Africa with electric vehicles and sustainable logistics." />
     <title>About — E‑Fikishe</title>
+    <link rel="icon" type="image/svg+xml" href="logo-efikishe.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="index.html">E‑Fikishe</a>
         <nav class="nav">
           <a href="index.html" class="nav-link">Home</a>
           <a href="about.html" class="nav-link active">About</a>
+          <a href="services.html" class="nav-link">Services</a>
+          <a href="book.html" class="nav-link">Book</a>
           <a href="donate.html" class="nav-link">Donate</a>
-          <a href="#" class="nav-link open-waitlist" id="loginLinkTop">Login</a>
+          <a href="contact.html" class="nav-link">Contact</a>
         </nav>
+        <div class="header-actions">
+          <a href="#" class="btn btn-ghost nav-login open-waitlist" id="loginLinkTop">Log In</a>
+          <a href="#" class="btn btn-primary join-waitlist open-waitlist">Join The Waitlist</a>
+        </div>
+        <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
       </div>
     </header>
 
-    <main>
-      <section class="section container">
-        <h1 class="section-title">About E‑Fikishe</h1>
+    <main id="main-content">
+      <section class="section container" data-parallax-speed="0.05">
+        <h1 class="section-title" style="color: var(--green-primary);">About E‑Fikishe</h1>
         <p class="lead">E‑Fikishe is an intent-driven demo of a modern, low-friction electric delivery platform. This About page focuses on clear, readable content and accessible structure for global audiences.</p>
 
         <article class="card" style="margin-top:18px">
@@ -56,16 +69,16 @@
         <h2>Join the waitlist</h2>
         <p class="muted">We’re currently in private preview — join the waitlist for access.</p>
         <form id="waitlistForm" class="waitlist-form">
-          <label><span class="muted">Full name</span><input id="w-name" name="name" type="text" required></label>
-          <label><span class="muted">Email</span><input id="w-email" name="email" type="email" required></label>
-          <label><span class="muted">Interest</span>
+          <label><span>Full name</span><input id="w-name" name="name" type="text" required></label>
+          <label><span>Email</span><input id="w-email" name="email" type="email" required></label>
+          <label><span>Interest</span>
             <select id="w-interest" name="interest">
               <option value="book">Book deliveries</option>
               <option value="partner">Partner / Rider</option>
               <option value="invest">Invest / Donate</option>
             </select>
           </label>
-          <div class="form-actions"><button class="btn btn-primary open-waitlist" type="submit">Join waitlist</button></div>
+          <div class="form-actions"><button class="btn btn-primary" type="submit">Join waitlist</button></div>
         </form>
         <div style="margin-top:12px;text-align:right"><button id="waitlistClose" class="btn btn-ghost">Close</button></div>
       </div>
