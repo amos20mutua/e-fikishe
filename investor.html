@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Investor Dashboard — E-Fikishe (Demo)</title>
+    <link rel="icon" type="image/svg+xml" href="logo-efikishe.svg">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -13,13 +14,15 @@
         <h2 id="waitlistTitle">E‑Fikishe — Early access</h2>
         <p>We're launching soon. Join the waitlist to receive early access and priority booking when we go live.</p>
         <form id="waitlistForm" class="waitlist-form" novalidate>
-          <input id="w-name" name="name" type="text" placeholder="Full name" required>
-          <input id="w-email" name="email" type="email" placeholder="you@example.org" required>
-          <input id="w-phone" name="phone" type="tel" placeholder="Phone (optional)">
-          <select id="w-interest" name="interest">
-            <option value="book">Book deliveries</option>
-            <option value="invest">Invest / Donate</option>
-          </select>
+          <label><span>Full name</span><input id="w-name" name="name" type="text" required></label>
+          <label><span>Email</span><input id="w-email" name="email" type="email" required></label>
+          <label><span>Phone (optional)</span><input id="w-phone" name="phone" type="tel"></label>
+          <label><span>Interest</span>
+            <select id="w-interest" name="interest">
+              <option value="book">Book deliveries</option>
+              <option value="invest">Invest / Donate</option>
+            </select>
+          </label>
           <div class="waitlist-actions">
             <button class="btn btn-primary" type="submit">Join waitlist</button>
             <div id="waitlistNote" class="waitlist-note"></div>
@@ -33,13 +36,23 @@
     </div>
     <header class="site-header">
       <div class="container header-inner">
-        <a class="brand" href="index.html">E‑Fikishe</a>
+        <a class="brand" href="index.html">
+          <img src="logo-efikishe.svg" alt="" class="brand-logo">
+          <span>E‑Fikishe</span>
+        </a>
         <nav class="nav">
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="donate.html">Donate</a>
-          <button class="btn btn-ghost open-waitlist" id="openWaitlist">Join waitlist</button>
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="services.html" class="nav-link">Services</a>
+          <a href="book.html" class="nav-link">Book</a>
+          <a href="donate.html" class="nav-link">Donate</a>
+          <a href="contact.html" class="nav-link">Contact</a>
         </nav>
+        <div class="header-actions">
+          <a href="#" class="btn btn-ghost nav-login open-waitlist" id="loginLink">Log In</a>
+          <a href="#" class="btn btn-primary join-waitlist open-waitlist">Join The Waitlist</a>
+        </div>
+        <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
       </div>
     </header>
 
