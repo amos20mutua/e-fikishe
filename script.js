@@ -8,7 +8,14 @@
   - Contact form stub (no backend) and deck download stub
 */
 
-document.addEventListener('DOMContentLoaded', () => {
+// Accessibility: Announce page load to screen readers
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+function init() {
   // 0) Small helper: send waitlist confirmation email via backend / email service
   // Replace WAITLIST_EMAIL_ENDPOINT with your deployed endpoint URL.
   const WAITLIST_EMAIL_ENDPOINT = ''; // e.g. 'https://your-backend.example.com/api/waitlist-email'
@@ -35,17 +42,41 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   // Add sticky header shadow and center-on-scroll behavior
+  // Optimized with throttling to prevent hanging
   const headerEl = document.querySelector('.site-header');
   const heroEl = document.querySelector('.hero');
+  let headerTicking = false;
+  let lastHeaderUpdate = 0;
+  const HEADER_THROTTLE = 16; // ~60fps for header
+  
   function onScrollHeader(){
     if(!headerEl) return;
-    if(window.scrollY > 8) headerEl.classList.add('scrolled'); else headerEl.classList.remove('scrolled');
+    const now = Date.now();
+    if (now - lastHeaderUpdate < HEADER_THROTTLE) return;
+    
+    const scrollY = window.scrollY;
+    if(scrollY > 8) headerEl.classList.add('scrolled'); 
+    else headerEl.classList.remove('scrolled');
+    
     // Center header into translucent bar after passing hero area
     const threshold = heroEl ? Math.max(120, heroEl.offsetHeight - 120) : 140;
-    if (window.scrollY > threshold) headerEl.classList.add('centered'); else headerEl.classList.remove('centered');
+    if (scrollY > threshold) headerEl.classList.add('centered'); 
+    else headerEl.classList.remove('centered');
+    
+    lastHeaderUpdate = now;
   }
+  
+  function throttledHeaderScroll(){
+    if(headerTicking) return;
+    headerTicking = true;
+    requestAnimationFrame(() => {
+      onScrollHeader();
+      headerTicking = false;
+    });
+  }
+  
   onScrollHeader();
-  window.addEventListener('scroll', onScrollHeader, {passive:true});
+  window.addEventListener('scroll', throttledHeaderScroll, {passive:true});
 
   // Page transitions: fade-in on load, fade-out on internal navigation
   // Adds `is-loaded` class after DOM ready to trigger CSS entrance animations.
@@ -208,19 +239,51 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Waitlist overlay open/close handlers (login link should open waitlist)
-  document.querySelectorAll('.open-waitlist, #loginLink').forEach(el => {
+  document.querySelectorAll('.open-waitlist, #loginLink, .nav-login').forEach(el => {
     el.addEventListener('click', (ev) => {
       ev.preventDefault();
       const overlay = document.getElementById('waitlistOverlay');
       if (!overlay) return;
       overlay.style.display = 'flex';
-      const name = document.getElementById('w-name'); if (name) name.focus();
+      document.body.classList.add('lock-scroll');
+      const name = document.getElementById('w-name'); 
+      if (name) {
+        setTimeout(() => name.focus(), 100); // Small delay to ensure overlay is visible
+      }
     });
   });
 
-  const waitClose = document.getElementById('waitlistClose');
-  if (waitClose) waitClose.addEventListener('click', () => {
-    const overlay = document.getElementById('waitlistOverlay'); if (overlay) overlay.style.display = 'none';
+  // Close waitlist overlay - handle all close buttons
+  document.querySelectorAll('#waitlistClose').forEach(closeBtn => {
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const overlay = document.getElementById('waitlistOverlay');
+      if (overlay) {
+        overlay.style.display = 'none';
+        document.body.classList.remove('lock-scroll');
+      }
+    });
+  });
+  
+  // Also close on overlay background click
+  document.querySelectorAll('.waitlist-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.style.display = 'none';
+        document.body.classList.remove('lock-scroll');
+      }
+    });
+  });
+  
+  // Close on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const overlay = document.getElementById('waitlistOverlay');
+      if (overlay && overlay.style.display !== 'none') {
+        overlay.style.display = 'none';
+        document.body.classList.remove('lock-scroll');
+      }
+    }
   });
 
   const wForm = document.getElementById('waitlistForm');
@@ -365,43 +428,62 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* ------------------------------------------------------------------
-     Simple performant parallax for sections with class `parallax`
-     - Use `data-parallax-speed` on the element (0.03..0.3) for intensity
-     - Moves the inner `.parallax-content` subtly to create depth
+     Enhanced parallax for sections with data-parallax-speed
+     - Smooth, performant parallax that creates depth
+     - Optimized with throttling to prevent hanging
   ------------------------------------------------------------------ */
   (function initParallax(){
-    const els = Array.from(document.querySelectorAll('.parallax'));
+    const els = Array.from(document.querySelectorAll('[data-parallax-speed]'));
     if (!els.length) return;
 
-    const state = { ticking: false };
+    const state = { ticking: false, lastScroll: 0 };
+    const THROTTLE_MS = 16; // ~60fps
 
     function update(){
       const sc = window.scrollY || window.pageYOffset;
       const vh = window.innerHeight || document.documentElement.clientHeight;
+      
       els.forEach(el => {
         const rect = el.getBoundingClientRect();
+        // Skip if element is far off-screen to save performance
+        if (rect.bottom < -300 || rect.top > vh + 300) return;
+        
         const speed = parseFloat(el.getAttribute('data-parallax-speed')) || 0.08;
-        const depth = speed;
         // compute progress from center of viewport (-1 .. 1)
         const elCenter = rect.top + rect.height / 2;
         const screenCenter = vh / 2;
         const dist = (elCenter - screenCenter) / vh; // -1..1-ish
-        const ty = Math.round(-dist * 40 * depth); // translate up to ~40px
-        const content = el.querySelector('.parallax-content') || el.firstElementChild;
-        if (content) content.style.transform = `translate3d(0, ${ty}px, 0)`;
-        // subtle background parallax via background-position if present
+        const ty = Math.round(-dist * 60 * speed); // translate up to ~60px for more effect
+        
+        // Apply transform to element
+        el.style.transform = `translate3d(0, ${ty}px, 0)`;
+        el.style.willChange = 'transform';
+        
+        // Also move background if it has one
         const bg = window.getComputedStyle(el).backgroundImage;
-        if (bg && bg !== 'none') {
-          const posY = Math.round(-dist * 30 * depth);
+        if (bg && bg !== 'none' && bg !== 'initial') {
+          const posY = Math.round(-dist * 40 * speed);
           el.style.backgroundPosition = `50% ${50 + posY}%`;
         }
       });
       state.ticking = false;
+      state.lastScroll = sc;
     }
 
-    function onScroll(){ if (state.ticking) return; state.ticking = true; requestAnimationFrame(update); }
+    function onScroll(){ 
+      if (state.ticking) return;
+      const now = Date.now();
+      if (now - state.lastScroll < THROTTLE_MS) return;
+      state.ticking = true; 
+      requestAnimationFrame(update); 
+    }
+    
     window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', onScroll);
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(onScroll, 150);
+    }, {passive:true});
     // initial
     setTimeout(onScroll, 80);
   })();
@@ -409,15 +491,24 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ------------------------------------------------------------------
      Floating decorative tiles — subtle parallax offset tied to scroll
      - Non-interactive background elements that move at different depths
+     - Optimized with throttling
   ------------------------------------------------------------------ */
   (function initFloatingTiles(){
     const tiles = Array.from(document.querySelectorAll('.float-tiles .tile'));
     if (!tiles.length) return;
 
+    let ticking = false;
+    let lastUpdate = 0;
+    const THROTTLE_MS = 32; // ~30fps for decorative elements
+
     function update(){
       const sc = window.scrollY || window.pageYOffset;
       const vh = window.innerHeight || document.documentElement.clientHeight;
       tiles.forEach((t, i) => {
+        const rect = t.getBoundingClientRect();
+        // Skip if tile is far off-screen
+        if (rect.bottom < -300 || rect.top > vh + 300) return;
+        
         const depth = parseFloat(t.getAttribute('data-depth')) || 0.12;
         // compute a gentle translate and subtle rotation based on scroll
         const ty = Math.round((sc * depth) % (vh)) * 0.06;
@@ -427,12 +518,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const opacity = 0.32 + (depth * 0.4);
         t.style.opacity = opacity;
       });
+      lastUpdate = Date.now();
     }
 
-    let ticking = false;
-    function onScroll(){ if (ticking) return; ticking = true; requestAnimationFrame(()=>{ update(); ticking=false; }); }
+    function onScroll(){ 
+      if (ticking) return;
+      const now = Date.now();
+      if (now - lastUpdate < THROTTLE_MS) return;
+      ticking = true; 
+      requestAnimationFrame(()=>{ update(); ticking=false; }); 
+    }
     window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', onScroll);
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(update, 150);
+    }, {passive:true});
     // initial position
     setTimeout(update, 60);
   })();
@@ -440,15 +541,23 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ------------------------------------------------------------------
      Gallery parallax / scale on scroll
      - Scales gallery items slightly based on distance from viewport center
+     - Optimized with throttling
   ------------------------------------------------------------------ */
   (function initGalleryParallax(){
     const items = Array.from(document.querySelectorAll('.gallery-item'));
     if (!items.length) return;
 
+    let ticking = false;
+    let lastUpdate = 0;
+    const THROTTLE_MS = 32;
+
     function updateItem(el){
       const speed = parseFloat(el.getAttribute('data-speed')) || 1;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
+      // Skip if far off-screen
+      if (rect.bottom < -200 || rect.top > vh + 200) return;
+      
       const elCenter = rect.top + rect.height/2;
       const screenCenter = vh/2;
       const dist = Math.abs(elCenter - screenCenter);
@@ -461,10 +570,25 @@ document.addEventListener('DOMContentLoaded', () => {
       if (t > 0.04) el.style.boxShadow = '0 28px 70px rgba(6,24,30,0.12)'; else el.style.boxShadow = '';
     }
 
-    let ticking = false;
-    function onScroll(){ if (ticking) return; ticking = true; requestAnimationFrame(()=>{ items.forEach(i=> updateItem(i)); ticking = false; }); }
+    function onScroll(){ 
+      if (ticking) return;
+      const now = Date.now();
+      if (now - lastUpdate < THROTTLE_MS) return;
+      ticking = true; 
+      requestAnimationFrame(()=>{ 
+        items.forEach(i=> updateItem(i)); 
+        ticking = false;
+        lastUpdate = Date.now();
+      }); 
+    }
     window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', onScroll);
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        items.forEach(i=> updateItem(i));
+      }, 150);
+    }, {passive:true});
     // initial
     setTimeout(onScroll, 120);
   })();
@@ -587,45 +711,115 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Donation form: demo payment flow
+  // Donation form: improved UX with preset amounts
   const donationForm = document.getElementById('donationForm');
   if (donationForm) {
-    // quick preset amount buttons
-    document.querySelectorAll('.donate-amt').forEach(btn => {
+    const amountField = document.getElementById('donationAmount');
+    const amountButtons = document.querySelectorAll('.donation-amount-btn');
+    
+    // Preset amount buttons
+    amountButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        const amt = btn.getAttribute('data-amt');
-        const input = document.getElementById('donationAmount');
-        if (input) input.value = amt;
+        // Remove active state from all buttons
+        amountButtons.forEach(b => b.classList.remove('active'));
+        // Add active state to clicked button
+        btn.classList.add('active');
+        // Set amount in input
+        const amt = btn.getAttribute('data-amount');
+        if (amountField) {
+          amountField.value = amt;
+          amountField.focus();
+        }
       });
     });
+    
+    // Update button states when user types custom amount
+    if (amountField) {
+      amountField.addEventListener('input', () => {
+        const value = parseFloat(amountField.value);
+        amountButtons.forEach(btn => {
+          const btnAmount = parseFloat(btn.getAttribute('data-amount'));
+          if (value === btnAmount) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      });
+    }
 
     donationForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      // inline validation
+      
+      // Get form fields
       const nameField = document.getElementById('donorName');
       const emailField = document.getElementById('donorEmail');
-      const amountField = document.getElementById('donationAmount');
-      const name = nameField.value.trim();
-      const email = emailField.value.trim();
-      const amt = parseFloat(amountField.value);
+      const name = nameField?.value.trim() || '';
+      const email = emailField?.value.trim() || '';
+      const amt = parseFloat(amountField?.value) || 0;
       const result = document.getElementById('donationResult');
-      // clear previous field errors
-      [nameField, emailField, amountField].forEach(f => {
-        const next = f.nextElementSibling; if (next && next.classList && next.classList.contains('field-error')) next.remove();
-      });
-      const emailRe = /^\S+@\S+\.\S+$/;
-      if (!name) { showFieldError(nameField, 'Please enter your name.'); return; }
-      if (!email || !emailRe.test(email)) { showFieldError(emailField, 'Please enter a valid email.'); return; }
-      if (!amt || amt <= 0) { showFieldError(amountField, 'Please enter a valid donation amount.'); return; }
-      // Simulate payment processing with small animation
+      
+      // Clear previous errors
+      clearFieldErrors(donationForm);
       result.textContent = '';
-      const btn = donationForm.querySelector('button[type="submit"]');
-      btn.disabled = true; btn.textContent = 'Processing…';
+      result.className = '';
+      
+      // Validation
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let hasError = false;
+      
+      if (!name) {
+        showFieldError(nameField, 'Please enter your name.');
+        hasError = true;
+      }
+      if (!email || !emailRe.test(email)) {
+        showFieldError(emailField, 'Please enter a valid email address.');
+        hasError = true;
+      }
+      if (!amt || amt <= 0) {
+        showFieldError(amountField, 'Please enter a valid donation amount (minimum $1).');
+        hasError = true;
+      }
+      
+      if (hasError) return;
+      
+      // Simulate payment processing
+      const submitBtn = donationForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn?.textContent || 'Donate Now';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing…';
+        submitBtn.setAttribute('aria-busy', 'true');
+      }
+      
+      // Simulate API call
       setTimeout(() => {
-        result.textContent = `Thank you ${name}. Donation of $${amt.toFixed(2)} received (demo). We will contact ${email} with a receipt.`;
+        result.className = 'card';
+        result.style.background = 'var(--bg-secondary)';
+        result.style.padding = 'var(--space-md)';
+        result.style.borderRadius = 'var(--radius)';
+        result.innerHTML = `
+          <h3 style="margin-bottom: var(--space-sm); color: var(--accent);">Thank you, ${escapeHtml(name)}!</h3>
+          <p style="margin-bottom: var(--space-xs);"><strong>Donation amount:</strong> $${amt.toFixed(2)}</p>
+          <p style="margin-bottom: var(--space-xs);"><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p class="muted" style="margin-top: var(--space-sm);">We will send a receipt to your email address. Your support helps us scale electric delivery in Nairobi.</p>
+          <p class="muted" style="margin-top: var(--space-xs); font-size: var(--font-size-sm);"><em>Note: This is a demo. No actual payment was processed.</em></p>
+        `;
+        result.setAttribute('role', 'alert');
+        
+        // Reset form
         donationForm.reset();
-        btn.disabled = false; btn.textContent = 'Donate Now';
-      }, 900);
+        amountButtons.forEach(b => b.classList.remove('active'));
+        
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+          submitBtn.removeAttribute('aria-busy');
+        }
+        
+        // Scroll to result
+        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 1200);
     });
   }
 
@@ -850,19 +1044,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // add parallax zoom for impact tiles using data-parallax-zoom if present
+    // Optimized with throttling
+    let tick = false;
+    let lastVideoUpdate = 0;
+    const VIDEO_THROTTLE = 32;
+    
     function update(){
       const vh = window.innerHeight || document.documentElement.clientHeight;
       vids.forEach(v => {
         const rect = v.getBoundingClientRect();
+        // Skip if far off-screen
+        if (rect.bottom < -200 || rect.top > vh + 200) return;
+        
         const center = rect.top + rect.height/2;
         const dist = (center - vh/2) / vh; // -1..1
         const zoom = 0.06; // mild zoom
         const scale = 1 + Math.cos(dist * Math.PI) * zoom;
         v.style.transform = `scale(${scale})`;
       });
+      lastVideoUpdate = Date.now();
     }
-    let tick = false; function onScroll(){ if (tick) return; tick = true; requestAnimationFrame(()=>{ update(); tick=false; }); }
-    window.addEventListener('scroll', onScroll, {passive:true}); setTimeout(onScroll,80);
+    
+    function onScroll(){ 
+      if (tick) return;
+      const now = Date.now();
+      if (now - lastVideoUpdate < VIDEO_THROTTLE) return;
+      tick = true; 
+      requestAnimationFrame(()=>{ update(); tick=false; }); 
+    }
+    window.addEventListener('scroll', onScroll, {passive:true}); 
+    setTimeout(onScroll,80);
   })();
-});
+}
 
