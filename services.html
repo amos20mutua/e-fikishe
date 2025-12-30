@@ -1,32 +1,40 @@
 <!doctype html>
 <html lang="en">
-<head>
+  <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="E-Fikishe electric delivery services - on-demand deliveries, business logistics, and NGO impact deliveries in Nairobi." />
   <title>Services — E-Fikishe</title>
   <link rel="icon" type="image/svg+xml" href="logo-efikishe.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- ================= WAITLIST OVERLAY ================= -->
-<div id="waitlistOverlay" class="waitlist-overlay">
+<div id="waitlistOverlay" class="waitlist-overlay" style="display:none;">
   <div class="waitlist-panel" role="dialog" aria-modal="true">
     <h2>E-Fikishe Platform</h2>
     <p class="muted">
       Service access is currently limited. Join the waitlist to unlock bookings when we launch.
     </p>
 
-    <form class="waitlist-form">
-      <input type="text" placeholder="Full name" required>
-      <input type="email" placeholder="Email address" required>
-      <select>
-        <option>Book deliveries</option>
-        <option>Business logistics</option>
-        <option>Rider network</option>
-      </select>
-      <button class="btn btn-primary" type="submit">Join waitlist</button>
+    <form id="waitlistForm" class="waitlist-form">
+      <label><span>Full name</span><input id="w-name" name="name" type="text" required></label>
+      <label><span>Email</span><input id="w-email" name="email" type="email" required></label>
+      <label><span>Interest</span>
+        <select id="w-interest" name="interest">
+          <option value="book">Book deliveries</option>
+          <option value="business">Business logistics</option>
+          <option value="rider">Rider network</option>
+        </select>
+      </label>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Join waitlist</button></div>
     </form>
+    <div style="margin-top:12px;text-align:right"><button id="waitlistClose" class="btn btn-ghost">Close</button></div>
 
     <div class="divider">Admin access</div>
 
@@ -45,11 +53,17 @@
       <span>E-Fikishe</span>
     </a>
     <nav class="nav">
-      <a href="index.html">Overview</a>
-      <a href="book.html">Booking</a>
-      <a href="services.html" class="active">Services</a>
-      <a href="donate.html">Donate</a>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="services.html" class="nav-link active">Services</a>
+      <a href="book.html" class="nav-link">Book</a>
+      <a href="donate.html" class="nav-link">Donate</a>
+      <a href="contact.html" class="nav-link">Contact</a>
     </nav>
+    <div class="header-actions">
+      <a href="#" class="btn btn-ghost nav-login open-waitlist" id="loginLink">Log In</a>
+      <a href="#" class="btn btn-primary join-waitlist open-waitlist">Join The Waitlist</a>
+    </div>
     <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
   </div>
 </header>
