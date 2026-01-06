@@ -9,7 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="styles.css">
+    <script src="data-storage.js"></script>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -37,13 +39,15 @@
         <h1 class="section-title" style="color: var(--green-primary);">About E‑Fikishe</h1>
         <p class="lead">E‑Fikishe is an intent-driven demo of a modern, low-friction electric delivery platform. This About page focuses on clear, readable content and accessible structure for global audiences.</p>
 
-        <article class="card" style="margin-top:18px">
-          <h2>Mission</h2>
+        <article class="card" style="margin-top: var(--space-md);" data-parallax-speed="0.03">
+          <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+          <h2 style="margin-top: 0;">Mission</h2>
           <p>Reduce urban delivery cost and emissions by providing a marketplace for electric last-mile transport, with a focus on operational simplicity and rider welfare.</p>
         </article>
 
-        <article class="card" style="margin-top:18px">
-          <h2>Approach</h2>
+        <article class="card" style="margin-top: var(--space-md);" data-parallax-speed="0.04">
+          <div class="card-icon"><i class="fas fa-lightbulb"></i></div>
+          <h2 style="margin-top: 0;">Approach</h2>
           <ul>
             <li>Electric-first fleet and partner integrations.</li>
             <li>Local operations with global design standards.</li>
@@ -51,14 +55,14 @@
           </ul>
         </article>
         
-        <article class="card" style="margin-top:18px">
-          <h2>Media & Footage</h2>
-          <p class="lead">Sample parcel delivery imagery and short clips (demo assets).</p>
-          <div class="about-media" style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <img src="https://media.istockphoto.com/id/1367143777/photo/life-style-in-city.jpg?s=612x612&w=0&k=20&c=lra-BVOlhUXJ1lvTuQsJr8Jv5FUn3Z_IVTXh5-8RSOM=" alt="parcel on bike" style="width:100%;height:160px;object-fit:cover;border-radius:8px">
-            <video src="https://media.istockphoto.com/id/2168009196/video/courier-with-green-backpack-deliver-food-home-delivery-service-man-ride-moped.mp4?s=mp4-640x640-is&k=20&c=xCoY00wzDJQvW7EbwVlkD8zI_U63h4QGz9dfSMlhGsw=" autoplay muted loop playsinline style="width:100%;height:160px;object-fit:cover;border-radius:8px"></video>
-            <img src="https://media.istockphoto.com/id/2217152743/photo/uber-eats-in-japan.jpg?s=612x612&w=0&k=20&c=Lh8OFh2RCTEg0HmDiSEbq5lzoZzlLDf0Zx95AKqZQyY=" alt="rider delivering parcel" style="width:100%;height:160px;object-fit:cover;border-radius:8px">
-            <img src="https://media.istockphoto.com/id/2225359042/photo/brightly-lit-warehouse-showcases-neatly-arranged-boxes-on-wooden-pallets-emphasizing.jpg?s=612x612&w=0&k=20&c=8oqhY_YRvwr3bnmJoJwxhONr1WHyIr6Wz9gmJK6HBM8=" alt="delivery hub" style="width:100%;height:160px;object-fit:cover;border-radius:8px">
+        <article class="card" style="margin-top: var(--space-md);">
+          <h2 style="margin-top: 0;">Media & Footage</h2>
+          <p class="lead" style="margin-bottom: var(--space-sm);">Sample parcel delivery imagery and short clips (demo assets).</p>
+          <div class="about-media">
+            <img src="https://media.istockphoto.com/id/1367143777/photo/life-style-in-city.jpg?s=612x612&w=0&k=20&c=lra-BVOlhUXJ1lvTuQsJr8Jv5FUn3Z_IVTXh5-8RSOM=" alt="parcel on bike">
+            <video src="https://media.istockphoto.com/id/2168009196/video/courier-with-green-backpack-deliver-food-home-delivery-service-man-ride-moped.mp4?s=mp4-640x640-is&k=20&c=xCoY00wzDJQvW7EbwVlkD8zI_U63h4QGz9dfSMlhGsw=" autoplay muted loop playsinline></video>
+            <img src="https://media.istockphoto.com/id/2217152743/photo/uber-eats-in-japan.jpg?s=612x612&w=0&k=20&c=Lh8OFh2RCTEg0HmDiSEbq5lzoZzlLDf0Zx95AKqZQyY=" alt="rider delivering parcel">
+            <img src="https://media.istockphoto.com/id/2225359042/photo/brightly-lit-warehouse-showcases-neatly-arranged-boxes-on-wooden-pallets-emphasizing.jpg?s=612x612&w=0&k=20&c=8oqhY_YRvwr3bnmJoJwxhONr1WHyIr6Wz9gmJK6HBM8=" alt="delivery hub">
           </div>
         </article>
       </section>
@@ -80,7 +84,7 @@
           </label>
           <div class="form-actions"><button class="btn btn-primary" type="submit">Join waitlist</button></div>
         </form>
-        <div style="margin-top:12px;text-align:right"><button id="waitlistClose" class="btn btn-ghost">Close</button></div>
+        <div style="margin-top: var(--space-sm); text-align: right;"><button id="waitlistClose" class="btn btn-ghost">Close</button></div>
       </div>
     </div>
 
@@ -88,7 +92,7 @@
       <div class="container footer-inner footer-grid">
         <div class="footer-brand-col">
           <a class="brand footer-brand" href="index.html">E‑Fikishe</a>
-          <p class="muted" style="margin-top:8px;max-width:360px">Scaling clean, affordable last-mile delivery with electric bikes — pilot phase in Nairobi.</p>
+          <p class="muted" style="margin-top: var(--space-xs); max-width: 360px;">Scaling clean, affordable last-mile delivery with electric bikes — pilot phase in Nairobi.</p>
         </div>
 
         <div class="footer-links-col">
@@ -103,16 +107,17 @@
         <div class="footer-contact-col">
           <h4>Support</h4>
           <p class="muted">Supporter contact and partnership intake via Donate page.</p>
-          <a class="btn btn-primary" href="donate.html" style="margin-top:8px;">Support the mission</a>
+          <a class="btn btn-primary" href="donate.html" style="margin-top: var(--space-xs);">Support the mission</a>
         </div>
 
         <div class="footer-meta-col">
           <div class="muted">© <span id="year"></span> E‑Fikishe</div>
-          <div class="muted" style="margin-top:6px">Built for cleaner cities • Nairobi</div>
+          <div class="muted" style="margin-top: var(--space-xs);">Built for cleaner cities • Nairobi</div>
         </div>
       </div>
     </footer>
 
+    <script src="data-storage.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
