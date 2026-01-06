@@ -293,17 +293,25 @@ function init() {
     const emailField = document.getElementById('w-email');
     const name = nameField?.value.trim();
     const email = emailField?.value.trim();
+    const phone = document.getElementById('w-phone')?.value.trim() || '';
     const interest = document.getElementById('w-interest')?.value || '';
     if (!name || !email) { alert('Please provide name and email.'); return; }
     const btn = wForm.querySelector('button[type="submit"]');
     if (btn) { btn.disabled = true; btn.textContent = 'Joining...'; }
+
+    // Save to data storage
+    if (typeof dataStorage !== 'undefined') {
+      const result = dataStorage.saveWaitlist({ name, email, phone, interest, source: 'waitlist-form' });
+      if (!result.success) {
+        console.error('Failed to save waitlist entry:', result.error);
+      }
+    }
 
     const entry = {
       name,
       email,
       interest,
       ts: new Date().toISOString(),
-      // Optional: used by backend to personalise the email
       logoUrl: window.location.origin + '/logo-efikishe.svg',
       siteUrl: window.location.origin,
       source: 'waitlist-overlay'
@@ -311,7 +319,7 @@ function init() {
 
     await sendWaitlistEmail(entry);
 
-    alert('Thanks — you have been added to the waitlist.');
+    alert('Thanks — you have been added to the waitlist. We\'ll contact you soon.');
     const overlay = document.getElementById('waitlistOverlay'); if (overlay) overlay.style.display = 'none';
     if (btn) { btn.disabled = false; btn.textContent = 'Join waitlist'; }
     wForm.reset();
@@ -333,6 +341,23 @@ function init() {
   } else {
     // fallback for older browsers
     reveals.forEach(r => r.classList.add('is-revealed'));
+  }
+
+  // Enhanced scroll reveal for cards and stats
+  const cardsAndStats = document.querySelectorAll('.card, .stat');
+  if ('IntersectionObserver' in window && cardsAndStats.length) {
+    const cardObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          cardObs.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.1, rootMargin: '0px 0px -50px 0px'});
+    cardsAndStats.forEach(el => cardObs.observe(el));
+  } else {
+    // fallback
+    cardsAndStats.forEach(el => el.classList.add('is-visible'));
   }
 
   // 5) Animated counters (supports integers and decimals)
@@ -486,6 +511,75 @@ function init() {
     }, {passive:true});
     // initial
     setTimeout(onScroll, 80);
+  })();
+
+  /* ------------------------------------------------------------------
+     Layered video parallax - creates depth with different speeds
+     - Each layer moves at different speed based on data-parallax-depth
+     - Creates crisscrossing, busy effect
+  ------------------------------------------------------------------ */
+  (function initLayeredParallax(){
+    const container = document.querySelector('[data-parallax-container]');
+    if (!container) return;
+    
+    const layers = Array.from(container.querySelectorAll('[data-parallax-depth]'));
+    if (!layers.length) return;
+    
+    let ticking = false;
+    let lastUpdate = 0;
+    const THROTTLE_MS = 16;
+    
+    function update(){
+      const sc = window.scrollY || window.pageYOffset;
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const rect = container.getBoundingClientRect();
+      
+      // Skip if container is far off-screen
+      if (rect.bottom < -200 || rect.top > vh + 200) return;
+      
+      // Calculate container's position relative to viewport
+      const containerCenter = rect.top + rect.height / 2;
+      const screenCenter = vh / 2;
+      const dist = (containerCenter - screenCenter) / vh; // -1 to 1
+      
+      layers.forEach(layer => {
+        const depth = parseFloat(layer.getAttribute('data-parallax-depth')) || 0.2;
+        // Different layers move at different speeds - creates depth
+        const ty = Math.round(-dist * 80 * depth);
+        const tx = Math.round(dist * 30 * depth * (Math.random() > 0.5 ? 1 : -1));
+        const rot = Math.round(dist * 2 * depth);
+        
+        // Preserve any existing rotation from CSS
+        const existingRot = layer.style.transform.match(/rotate\(([^)]+)\)/);
+        const baseRot = existingRot ? parseFloat(existingRot[1]) : 0;
+        
+        layer.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${baseRot + rot}deg)`;
+        layer.style.willChange = 'transform';
+      });
+      
+      lastUpdate = Date.now();
+    }
+    
+    function onScroll(){
+      if (ticking) return;
+      const now = Date.now();
+      if (now - lastUpdate < THROTTLE_MS) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    }
+    
+    window.addEventListener('scroll', onScroll, {passive: true});
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(update, 150);
+    }, {passive: true});
+    
+    // Initial update
+    setTimeout(update, 100);
   })();
 
   /* ------------------------------------------------------------------
@@ -669,7 +763,7 @@ function init() {
     });
   }
 
-  // Booking form: validate and show confirmation summary (client-side demo)
+  // Booking form: validate and save to storage
   const bookingForm = document.getElementById('bookingForm');
   if (bookingForm) {
     bookingForm.addEventListener('submit', (e) => {
@@ -694,20 +788,48 @@ function init() {
       if (!time) { showFieldError(bookingForm.querySelector('#time'), 'Please select a pickup time.'); return; }
       if (!packageDetails) { showFieldError(bookingForm.querySelector('#package'), 'Please describe the package (weight, size, fragile).'); return; }
 
-      const confirmation = document.getElementById('bookingConfirmation');
-      confirmation.style.display = 'block';
-      confirmation.innerHTML = `
-        <strong>Booking request received (demo)</strong>
-        <p><strong>Name:</strong> ${escapeHtml(name)}<br>
-        <strong>Email:</strong> ${escapeHtml(email)}<br>
-        <strong>Phone:</strong> ${escapeHtml(phone)}<br>
-        <strong>Pickup:</strong> ${escapeHtml(pickup)}<br>
-        <strong>Destination:</strong> ${escapeHtml(destination)}<br>
-        <strong>When:</strong> ${escapeHtml(date)} ${escapeHtml(time)}<br>
-        <strong>Package:</strong> ${escapeHtml(packageDetails)}</p>
-        <p class="muted">This is a demo booking — no dispatch or payment has occurred. For live pilots we provide confirmation and tracking via our operations dashboard.</p>
-      `;
-      bookingForm.reset();
+      const submitBtn = bookingForm.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing...';
+      }
+
+      // Save to data storage
+      if (typeof dataStorage !== 'undefined') {
+        const result = dataStorage.saveBooking({ name, email, phone, pickup, destination, date, time, package: packageDetails });
+        if (result.success) {
+          const confirmation = document.getElementById('bookingConfirmation');
+          confirmation.style.display = 'block';
+          confirmation.innerHTML = `
+            <div style="padding: var(--space-md);">
+              <h3 style="color: var(--green-primary); margin-top: 0; margin-bottom: var(--space-sm);">
+                <i class="fas fa-check-circle" style="color: var(--green-bright); margin-right: var(--space-xs);"></i>
+                Booking Request Received
+              </h3>
+              <p style="margin-bottom: var(--space-sm);"><strong>Reference ID:</strong> ${result.id}</p>
+              <p style="margin-bottom: var(--space-xs);"><strong>Name:</strong> ${escapeHtml(name)}</p>
+              <p style="margin-bottom: var(--space-xs);"><strong>Email:</strong> ${escapeHtml(email)}</p>
+              <p style="margin-bottom: var(--space-xs);"><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+              <p style="margin-bottom: var(--space-xs);"><strong>Pickup:</strong> ${escapeHtml(pickup)}</p>
+              <p style="margin-bottom: var(--space-xs);"><strong>Destination:</strong> ${escapeHtml(destination)}</p>
+              <p style="margin-bottom: var(--space-xs);"><strong>When:</strong> ${escapeHtml(date)} at ${escapeHtml(time)}</p>
+              <p style="margin-bottom: var(--space-md);"><strong>Package:</strong> ${escapeHtml(packageDetails)}</p>
+              <p class="muted" style="margin-bottom: 0;">We'll review your request and send a quote within 24 hours. Check your email for confirmation.</p>
+            </div>
+          `;
+          confirmation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          bookingForm.reset();
+        } else {
+          alert('There was an error saving your booking. Please try again.');
+        }
+      } else {
+        alert('Storage system not available. Please contact us directly.');
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Request quote & book';
+      }
     });
   }
 
@@ -783,6 +905,18 @@ function init() {
       
       if (hasError) return;
       
+      // Save to data storage
+      let donationId = null;
+      if (typeof dataStorage !== 'undefined') {
+        const saveResult = dataStorage.saveDonation({ name, email, amount: amt });
+        if (saveResult.success) {
+          donationId = saveResult.id;
+        } else {
+          alert('There was an error saving your donation. Please try again.');
+          return;
+        }
+      }
+      
       // Simulate payment processing
       const submitBtn = donationForm.querySelector('button[type="submit"]');
       const originalText = submitBtn?.textContent || 'Donate Now';
@@ -799,11 +933,15 @@ function init() {
         result.style.padding = 'var(--space-md)';
         result.style.borderRadius = 'var(--radius)';
         result.innerHTML = `
-          <h3 style="margin-bottom: var(--space-sm); color: var(--accent);">Thank you, ${escapeHtml(name)}!</h3>
+          <h3 style="margin-bottom: var(--space-sm); color: var(--green-primary);">
+            <i class="fas fa-heart" style="color: var(--green-bright); margin-right: var(--space-xs);"></i>
+            Thank you, ${escapeHtml(name)}!
+          </h3>
+          ${donationId ? `<p style="margin-bottom: var(--space-xs); font-size: var(--font-size-sm); color: var(--text-secondary);"><strong>Reference:</strong> ${donationId}</p>` : ''}
           <p style="margin-bottom: var(--space-xs);"><strong>Donation amount:</strong> $${amt.toFixed(2)}</p>
           <p style="margin-bottom: var(--space-xs);"><strong>Email:</strong> ${escapeHtml(email)}</p>
           <p class="muted" style="margin-top: var(--space-sm);">We will send a receipt to your email address. Your support helps us scale electric delivery in Nairobi.</p>
-          <p class="muted" style="margin-top: var(--space-xs); font-size: var(--font-size-sm);"><em>Note: This is a demo. No actual payment was processed.</em></p>
+          <p class="muted" style="margin-top: var(--space-xs); font-size: var(--font-size-sm);"><em>Note: Payment processing integration coming soon. Your donation intent has been recorded.</em></p>
         `;
         result.setAttribute('role', 'alert');
         
